@@ -13,8 +13,8 @@ namespace Zaidimas_Kartuves.Models
         [Key]
         public int VardasId { get; set; }
         public string Pavadinimas { get; set; }
-        public int SpetaKartų { get; set; }
-        public int AtspetaKartų { get; set; }
+        public int SpetaKartu { get; set; }
+        public int AtspetaKartu { get; set; }
 
     }
 }
