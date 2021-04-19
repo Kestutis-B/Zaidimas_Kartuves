@@ -11,6 +11,7 @@ namespace Zaidimas_Kartuves.Models
     {
         [Key]
         public int MiestasId { get; set; }
+        [Required, MaxLength(30)]
         public string Pavadinimas { get; set; }
         public int SpetaKartu { get; set; }
         public int AtspetaKartu { get; set; }
