@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zaidimas_Kartuves.Services
 {
-    public class Zaidimas
+    public static class Zaidimas
     {
         static readonly List<string> vardai = new List<string> { "Deividas", "Algirdas", "Justinas", "Nerijus", "Egidijus", "Tatjana", "Margarita", "Brigita", "Leonarda", "Barbora" };
         static readonly List<string> miestai = new List<string> { "Klaipeda", "Pakruojis", "Palanga", "Vilkaviskis", "Panevezys", "Jurbarkas", "Taurage", "Ignalina", "Visaginas", "Kelme" };
@@ -39,7 +39,7 @@ namespace Zaidimas_Kartuves.Services
             Console.WriteLine("---Press any key to continue---");
             Console.ReadKey();
         }
-
+        
 
         static void Kartuves()
         {
@@ -103,38 +103,70 @@ namespace Zaidimas_Kartuves.Services
 
         static int SpejamRaide(string spejimas, string spejamasZodis)
         {
+            
             if (spejamasZodis.ToUpper().Contains(spejimas.ToUpper()))
             {
+                Console.WriteLine("Jusu speta raide {0} yra siame zodyje", spejimas);
                 SpejamoZodzioIsvedimas(spejamasZodis);
                 return 0;
+
+                
+            }
+
+            else if (!spetosRaides.Contains(spejimas))
+            {
+                int speti = int.Parse(spejimas);
+                if (speti == 0)
+                {
+                    Console.WriteLine("Jusu spetos raides '{0}' siame zodyje nera", spejimas);
+                    SpejamoZodzioIsvedimas(spejamasZodis);
+                    return 1;
+                }
+                else if(speti >= 1)
+                {
+                    Console.WriteLine("Jau bandete speti raide '{0}', bandykite speti kita raide", spejimas);
+                    SpejamoZodzioIsvedimas(spejamasZodis);
+                    return 0;
+                }
+                else
+                {
+                    Console.WriteLine("bandymas");
+                    return 0;
+                }
+                
             }
             else
             {
-                Console.WriteLine($"Raides {spejimas} spejamam zodyje nera... :( ");
+                Console.WriteLine($"Raides '{spejimas}' spejamame zodyje nera... :( ");
                 SpejamoZodzioIsvedimas(spejamasZodis);
                 return 1;
             }
+            
         }
 
         static void SpejamoZodzioIsvedimas(string spejamasZodis)
         {
             Console.WriteLine($"Spekite zodi is {spejamasZodis.Length} raidziu ");
+            Console.WriteLine("Stai kiek raidziu atspejote :)");
             Console.Write("( ");
             int pabandytosRaides = 0; // susikuriam kintamaji, kuris skaiciuoja bandytas raides
             foreach (var raide in spejamasZodis)
-            //for (int i = 0; i < spejamasZodis.Length; i++)
             {
+                
                 if (spetosRaides.Contains(raide.ToString().ToUpper()))
                 {
                     Console.Write($"{raide}");
                     pabandytosRaides += 1;
+                }else
+                {
+                    Console.Write("_");
                 }
-                Console.Write(" _");
+                
             }
             Console.Write(" )");
             if (spejamasZodis.Length == pabandytosRaides)
             {
-                Console.WriteLine("Sveikiname, atspejote visas raides ir laimejote :) ");
+                Console.WriteLine("\nSveikiname, atspejote visas raides ir laimejote :) ");
                 BandysiteDarZaisti();
             }
 
@@ -216,12 +248,16 @@ namespace Zaidimas_Kartuves.Services
                     }
                     else if (spejimas.ToUpper() == spejamasZodis.ToUpper()) //raides verciamos i didziasias, kad spejimas ir uzduodamas zodis sutaptu
                     {
+                        Console.WriteLine("--------------------------------------------------");
                         Console.WriteLine("Sveikiname, atspejote zodi ir laimejote zaidima :) ");
+                        Console.WriteLine("--------------------------------------------------");
                         BandysiteDarZaisti();
                     }
                     else
                     {
+                        Console.WriteLine("--------------------------------------------------");
                         Console.WriteLine("Labai gaila, bet neatspejot zodzio ir pralaimejot");
+                        Console.WriteLine("--------------------------------------------------");
                         Console.WriteLine(kartuves[7]);
                         BandysiteDarZaisti();
                     }
